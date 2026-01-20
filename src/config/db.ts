@@ -4,7 +4,7 @@ dotenv.config({ path: ".env.local" });
 import mysql from "mysql2/promise";
 
 const connectDB = async () => {
-  const pool = await mysql.createPool({
+  const pool = mysql.createPool({
     host: "localhost",
     port: 3306,
     user: "root",
