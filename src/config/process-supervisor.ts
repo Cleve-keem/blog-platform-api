@@ -2,11 +2,11 @@ import type { Server } from "node:http";
 
 class ProcessSupervisor {
   private server: Server;
-  private db: any;
+  private sequelize;
 
-  constructor(server: Server, db: any) {
+  constructor(server: Server, sequelize: any) {
     this.server = server;
-    this.db = db;
+    this.sequelize = sequelize;
   }
 
   public initialize(): void {
@@ -50,10 +50,10 @@ class ProcessSupervisor {
         console.log(`[HTTP] server closed!`);
       }
 
-      if (this.db) {
-        console.log(`[MYSQL] disconnecting database...`);
-        await this.db.end();
-        console.log(`[MYSQL] database closed`);
+      if (this.sequelize) {
+        console.log(`[SEQUELIZE] disconnecting database...`);
+        await this.sequelize.close();
+        console.log(`[SEQUELIZE] database closed`);
       }
 
       process.exit(isCrash ? 1 : 0);

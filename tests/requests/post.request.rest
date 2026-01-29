@@ -1,0 +1,12 @@
+### Create a New Post
+POST http://localhost:4040/api/v1/posts
+Content-Type: application/json
+
+{
+  "title": "My First API Post",
+  "content": "Testing Sequelize with MySQL and REST client!",
+  "tags": ["api", "mysql", "test"]
+}
+
+### Get All Posts
+# GET http://localhost:4040/posts
