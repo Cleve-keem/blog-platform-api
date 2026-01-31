@@ -26,3 +26,6 @@ Content-Type: application/json
 
 ### Delete a post
 DELETE http://localhost:4040/api/v1/posts/3
+
+### Get a single post
+GET http://localhost:4040/api/v1/posts/3

@@ -37,7 +37,9 @@ class postController {
     try {
       const posts = await PostService.getAllPosts();
       if (!posts) return sendErrorResponse(res, 400, "Error getting posts");
-      console.log("✅ [FETCH_POSTS CONTROLLER] Posts was fetched successfully!");
+      console.log(
+        "✅ [FETCH_POSTS CONTROLLER] Posts was fetched successfully!",
+      );
       return sendSuccessResponse(res, 200, "Post fetched successfully", posts);
     } catch (error: any) {
       console.log(
@@ -89,6 +91,23 @@ class postController {
           "Error deleting post",
           error.message,
         );
+      }
+      return sendErrorResponse(res, 500, "Something went wrong", error.message);
+    }
+  }
+
+  static async getSinglePost(req: Request, res: Response) {
+    try {
+      const post = await PostService.getOnePostById(req.params.id as string);
+      console.log("✅ [SINGLE_POST_CONTROLLER] Post fetched successfully!");
+      return sendSuccessResponse(res, 200, "Post fetched!", post);
+    } catch (error: any) {
+      console.log(
+        "❌ [SINGLE_POST_CONTROLLER] Error getting post:",
+        error.message,
+      );
+      if (error instanceof PostNotFoundError) {
+        return sendErrorResponse(res, 400, "Error getting post", error.message);
       }
       return sendErrorResponse(res, 500, "Something went wrong", error.message);
     }
