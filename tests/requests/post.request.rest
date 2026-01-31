@@ -8,6 +8,7 @@ Content-Type: application/json
 {
   "title": "My First API Post",
   "content": "Testing Sequelize with MySQL and REST client!",
+  "category": "Technology",
   "tags": ["api", "mysql", "test"]
 }
 
@@ -22,3 +23,6 @@ Content-Type: application/json
   "category": "Love",
   "tags": ["happiness", "joy", "work"]
 }
+
+### Delete a post
+DELETE http://localhost:4040/api/v1/posts/3

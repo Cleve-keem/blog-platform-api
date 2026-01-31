@@ -18,5 +18,5 @@ export default class postRepository {
     return await Post.findByPk(id);
   }
 
-  // static async updateExistingPost(post: PostResponseType) {}
+  // static async deletePostById(id) {}
 }

@@ -4,7 +4,7 @@ export class PostTitleExistError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "POST TITLE ERROR";
-    this.code = 400;
+    this.code = 404;
   }
 }
 
@@ -14,6 +14,6 @@ export class PostNotFoundError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "POST NOT FOUND";
-    this.code = 400;
+    this.code = 404;
   }
 }

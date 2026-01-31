@@ -3,7 +3,10 @@ import validatePostData from "../utils/validator.js";
 import PostService from "../services/postService.js";
 import { sendErrorResponse, sendSuccessResponse } from "../utils/response.js";
 import { formatValidationError } from "../utils/helpers/formatError.js";
-import { PostTitleExistError } from "../utils/expections/postError.js";
+import {
+  PostNotFoundError,
+  PostTitleExistError,
+} from "../utils/expections/postError.js";
 
 class postController {
   static async createPost(req: Request, res: Response) {
@@ -16,10 +19,13 @@ class postController {
       }
       // Create post if valid
       const post = await PostService.createNewPost(data);
-      console.log("✅[CREATE POST CONTROLLER] Post created successfully!");
+      console.log("✅ [CREATE POST CONTROLLER] Post created successfully!");
       return sendSuccessResponse(res, 201, "Post created successfully!", post);
     } catch (err: any) {
-      console.log("[CREATE_POST CONTROLLER] Error creating post:", err.message);
+      console.log(
+        "❌ [CREATE_POST CONTROLLER] Error creating post:",
+        err.message,
+      );
       if (err instanceof PostTitleExistError) {
         return sendErrorResponse(res, err.code, err.message);
       }
@@ -31,11 +37,11 @@ class postController {
     try {
       const posts = await PostService.getAllPosts();
       if (!posts) return sendErrorResponse(res, 400, "Error getting posts");
-      console.log("✅[FETCH_POSTS CONTROLLER] Posts was fetched successfully!");
+      console.log("✅ [FETCH_POSTS CONTROLLER] Posts was fetched successfully!");
       return sendSuccessResponse(res, 200, "Post fetched successfully", posts);
     } catch (error: any) {
       console.log(
-        "[FETCH_POSTS CONTROLLER] Error fetching posts:",
+        "❌ [FETCH_POSTS CONTROLLER] Error fetching posts:",
         error.message,
       );
       return sendErrorResponse(res, 500, "Error fetching posts", error.message);
@@ -49,7 +55,7 @@ class postController {
         req.body,
       );
       console.log(
-        `✅[UPDATED_POST CONTROLLER] Post (ID:${updatedPost.id}) was fetched successfully!`,
+        `✅ [UPDATED_POST CONTROLLER] Post (ID:${updatedPost.id}) was fetched successfully!`,
       );
       return sendSuccessResponse(
         res,
@@ -59,10 +65,32 @@ class postController {
       );
     } catch (error: any) {
       console.log(
-        "[UPDATED_POSTS CONTROLLER] Error fetching posts:",
+        "❌ [UPDATED_POSTS CONTROLLER] Error fetching posts:",
         error.message,
       );
       return sendErrorResponse(res, 500, "Error updating post");
+    }
+  }
+
+  static async deletePost(req: Request, res: Response) {
+    try {
+      await PostService.deletePostById(req.params.id as string);
+      console.log("✅ [DELETE_POST_CONTROLLER] Post deleted successfully!");
+      return sendSuccessResponse(res, 204, "Post deleted!");
+    } catch (error: any) {
+      console.log(
+        "❌ [DELETE_POST_CONTROLLER] Error deleting post:",
+        error.message,
+      );
+      if (error instanceof PostNotFoundError) {
+        return sendErrorResponse(
+          res,
+          400,
+          "Error deleting post",
+          error.message,
+        );
+      }
+      return sendErrorResponse(res, 500, "Something went wrong", error.message);
     }
   }
 }

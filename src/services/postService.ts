@@ -15,6 +15,7 @@ class PostService {
   static async getAllPosts() {
     return await postRepository.findAll();
   }
+
   static async updateExistingPostById(
     postId: string | number,
     updatedPost: PostType,
@@ -31,6 +32,14 @@ class PostService {
     });
 
     return newPost.dataValues;
+  }
+
+  static async deletePostById(postId: number | string) {
+    const postInstance = await postRepository.findById(Number(postId));
+    if (!postInstance) {
+      throw new PostNotFoundError("Post not found!");
+    }
+    await postInstance.destroy();
   }
 }
 
