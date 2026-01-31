@@ -13,10 +13,12 @@ Content-Type: application/json
 
 ### Update existing post
 PUT http://localhost:4040/api/v1/posts/2
+Content-Type: application/json
 
 {
   "id": 2,
   "title": "Second Post Now",
   "content": "Happy that i am getting it right now!",
+  "category": "Love",
   "tags": ["happiness", "joy", "work"]
 }

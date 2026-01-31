@@ -20,23 +20,17 @@ class PostService {
     updatedPost: PostType,
   ) {
     const postInstance = await postRepository.findById(Number(postId));
-
     if (!postInstance) {
       throw new PostNotFoundError("Post not found!");
     }
-    console.log("post saved", postInstance);
 
-    postInstance.set({
+    const newPost = await postInstance.update({
       title: updatedPost.title,
       content: updatedPost.content,
       tags: updatedPost.tags,
     });
 
-    // postInstance.title = updatedPost.title;
-    // postInstance.content = updatedPost.content;
-    // postInstance.tags = updatedPost.tags;
-
-    await postInstance.save();
+    return newPost.dataValues;
   }
 }
 

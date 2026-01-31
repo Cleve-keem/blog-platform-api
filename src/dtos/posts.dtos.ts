@@ -1,4 +1,4 @@
-import {z} from "zod";
+import { z } from "zod";
 
 export const PostSchema = z.object({
   title: z
@@ -11,6 +11,8 @@ export const PostSchema = z.object({
     .string()
     .trim()
     .min(10, "Content is too short! Please provide at least 10 characters"),
+
+  category: z.string().trim().min(3, "Category is needed! Please provide one"),
 
   tags: z
     .array(z.string().min(1, "Tag cannot be empty").toLowerCase())

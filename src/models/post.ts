@@ -17,6 +17,10 @@ export const Post = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     tags: {
       type: DataTypes.JSON,
       allowNull: false,

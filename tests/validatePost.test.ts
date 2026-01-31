@@ -5,6 +5,7 @@ describe("Post data validation mode", () => {
     const post = {
       title: "Hello World",
       content: "This is a valid mock data",
+      category: "Technology",
       tags: ["test", "jest", "mock"],
     };
 

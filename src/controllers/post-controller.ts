@@ -38,11 +38,32 @@ class postController {
         "[FETCH_POSTS CONTROLLER] Error fetching posts:",
         error.message,
       );
+      return sendErrorResponse(res, 500, "Error fetching posts", error.message);
     }
   }
 
   static async updatePost(req: Request, res: Response) {
-    await PostService.updateExistingPostById(req.params.id as string, req.body);
+    try {
+      const updatedPost = await PostService.updateExistingPostById(
+        req.params.id as string,
+        req.body,
+      );
+      console.log(
+        `✅[UPDATED_POST CONTROLLER] Post (ID:${updatedPost.id}) was fetched successfully!`,
+      );
+      return sendSuccessResponse(
+        res,
+        201,
+        "Post updated successfully",
+        updatedPost,
+      );
+    } catch (error: any) {
+      console.log(
+        "[UPDATED_POSTS CONTROLLER] Error fetching posts:",
+        error.message,
+      );
+      return sendErrorResponse(res, 500, "Error updating post");
+    }
   }
 }
 
