@@ -8,5 +8,14 @@ Content-Type: application/json
   "tags": ["api", "mysql", "test"]
 }
 
+# {
+#   "title": "",
+#   "content": "",
+#   "tags": ["api", "mysql", "test"]
+# }
+
+
+
 ### Get All Posts
-# GET http://localhost:4040/posts
+GET http://localhost:4040/api/v1/posts
+
