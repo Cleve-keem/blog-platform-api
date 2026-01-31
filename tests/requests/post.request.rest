@@ -1,3 +1,6 @@
+### Get All Posts
+GET http://localhost:4040/api/v1/posts
+
 ### Create a New Post
 POST http://localhost:4040/api/v1/posts
 Content-Type: application/json
@@ -8,14 +11,12 @@ Content-Type: application/json
   "tags": ["api", "mysql", "test"]
 }
 
-# {
-#   "title": "",
-#   "content": "",
-#   "tags": ["api", "mysql", "test"]
-# }
+### Update existing post
+PUT http://localhost:4040/api/v1/posts/2
 
-
-
-### Get All Posts
-GET http://localhost:4040/api/v1/posts
-
+{
+  "id": 2,
+  "title": "Second Post Now",
+  "content": "Happy that i am getting it right now!",
+  "tags": ["happiness", "joy", "work"]
+}

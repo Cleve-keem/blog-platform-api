@@ -15,7 +15,7 @@ class postController {
         return sendErrorResponse(res, 400, "Validation error", errors);
       }
       // Create post if valid
-      const post = await PostService.createPost(data);
+      const post = await PostService.createNewPost(data);
       console.log("✅[CREATE POST CONTROLLER] Post created successfully!");
       return sendSuccessResponse(res, 201, "Post created successfully!", post);
     } catch (err: any) {
@@ -29,17 +29,20 @@ class postController {
 
   static async fetchPosts(_: Request, res: Response) {
     try {
-      const posts = await PostService.getPosts();
+      const posts = await PostService.getAllPosts();
       if (!posts) return sendErrorResponse(res, 400, "Error getting posts");
-
-      console.log("✅[FETCH POSTS CONTROLLER] Post was fetched successfully!");
+      console.log("✅[FETCH_POSTS CONTROLLER] Posts was fetched successfully!");
       return sendSuccessResponse(res, 200, "Post fetched successfully", posts);
     } catch (error: any) {
       console.log(
-        "[FETCH POSTS CONTROLLER] Error fetching posts:",
+        "[FETCH_POSTS CONTROLLER] Error fetching posts:",
         error.message,
       );
     }
+  }
+
+  static async updatePost(req: Request, res: Response) {
+    await PostService.updateExistingPostById(req.params.id as string, req.body);
   }
 }
 
