@@ -22,6 +22,7 @@ class PostService {
     const newPost = await postInstance.update({
       title: updatedPost.title,
       content: updatedPost.content,
+      category: updatedPost.category,
       tags: updatedPost.tags,
     });
 
