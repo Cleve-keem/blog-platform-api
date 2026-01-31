@@ -16,14 +16,8 @@ class PostService {
     return await postRepository.findAll();
   }
 
-  static async updateExistingPostById(
-    postId: string | number,
-    updatedPost: PostType,
-  ) {
-    const postInstance = await postRepository.findById(Number(postId));
-    if (!postInstance) {
-      throw new PostNotFoundError("Post not found!");
-    }
+  static async updateExistingPostById(postId: string, updatedPost: PostType) {
+    const postInstance = await this.findPostInstanceById(postId);
 
     const newPost = await postInstance.update({
       title: updatedPost.title,
@@ -34,12 +28,22 @@ class PostService {
     return newPost.dataValues;
   }
 
-  static async deletePostById(postId: number | string) {
+  static async deletePostById(postId: string) {
+    const postInstance = await this.findPostInstanceById(postId);
+    await postInstance.destroy();
+  }
+
+  static async getOnePostById(postId: string) {
+    return (await this.findPostInstanceById(postId)).dataValues;
+  }
+
+  static async findPostInstanceById(postId: string) {
     const postInstance = await postRepository.findById(Number(postId));
     if (!postInstance) {
       throw new PostNotFoundError("Post not found!");
     }
-    await postInstance.destroy();
+
+    return postInstance;
   }
 }
 
