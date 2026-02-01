@@ -1,5 +1,6 @@
 import { PostType } from "../dtos/posts.dtos.js";
 import { Post } from "../models/post.js";
+import { col, fn, Op } from "sequelize";
 
 export default class postRepository {
   static async findAll() {
@@ -16,5 +17,13 @@ export default class postRepository {
 
   static async findById(id: number) {
     return await Post.findByPk(id);
+  }
+
+  static async findByTag(tag: string) {
+    return await Post.findAll({
+      where: {
+        [Op.and]: [fn("JSON_CONTAINS", col("tags"), JSON.stringify(tag))],
+      },
+    });
   }
 }

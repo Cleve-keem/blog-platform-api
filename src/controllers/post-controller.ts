@@ -33,10 +33,19 @@ class postController {
     }
   }
 
-  static async fetchPosts(_: Request, res: Response) {
+  static async fetchPosts(req: Request, res: Response) {
+    const term = req.query.term as string;
     try {
-      const posts = await PostService.getAllPosts();
-      if (!posts) return sendErrorResponse(res, 400, "Error getting posts");
+      let posts;
+
+      if (term) {
+        console.log(`Searching for posts containing: ${term}`);
+        posts = await PostService.findPostByTerm(term);
+      } else {
+        posts = await PostService.getAllPosts();
+        if (!posts) return sendErrorResponse(res, 400, "Error getting posts");
+      }
+
       console.log(
         "✅ [FETCH_POSTS CONTROLLER] Posts was fetched successfully!",
       );

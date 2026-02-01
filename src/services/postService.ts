@@ -12,6 +12,7 @@ class PostService {
 
     return await postRepository.savePost(post);
   }
+
   static async getAllPosts() {
     return await postRepository.findAll();
   }
@@ -45,6 +46,10 @@ class PostService {
     }
 
     return postInstance;
+  }
+
+  static async findPostByTerm(term: string) {
+    return await postRepository.findByTag(term);
   }
 }
 

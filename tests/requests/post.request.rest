@@ -28,4 +28,7 @@ Content-Type: application/json
 DELETE http://localhost:4040/api/v1/posts/3
 
 ### Get a single post
-GET http://localhost:4040/api/v1/posts/3
+GET http://localhost:4040/api/v1/posts/2
+
+###  Get post by search
+GET http://localhost:4040/api/v1/posts?term=tech
