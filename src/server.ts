@@ -9,7 +9,7 @@ import { sequelize } from "./config/database.js";
 
 const startServer = async () => {
   const app: Application = expressLoader();
-  const PORT: number = Number(process.env.PORT);
+  const PORT: number = Number(process.env.PORT) || 10000;
 
   try {
     await sequelize.sync({ alter: true });
