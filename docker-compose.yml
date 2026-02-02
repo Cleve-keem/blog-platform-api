@@ -1,0 +1,43 @@
+name: blogging-platform
+services:
+  database:
+    image: mysql:latest
+    container_name: mysql_container2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+    env_file:
+      - .env.local
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - backend_data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: blogging_platform_api_container
+    env_file:
+      - .env.local
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      MYSQL_DATABASE_HOST: database
+      MYSQL_DATABASE_USER: ${MYSQL_DATABASE_USER}
+      MYSQL_DATABASE_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+      MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
+
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+volumes:
+  backend_data:

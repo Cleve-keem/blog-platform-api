@@ -1,0 +1,29 @@
+node_modules/
+npm-debug.log
+
+# Build outputs
+dist
+build
+
+# Secrets and environment variables
+.env
+.env.local
+.env.production
+.env.development
+
+# Version control
+.git
+.gitignore
+
+# OS-specific metadata
+.DS_Store
+Thumbs.db
+
+# Docker files (optional, but clean)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Tests and documentation
+tests/
+*.md
